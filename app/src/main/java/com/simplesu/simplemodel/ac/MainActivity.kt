@@ -1,5 +1,6 @@
 package com.simplesu.simplemodel.ac
 
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.LogUtils
 import com.simplesu.simplemodel.arch.ArchActivity
 import com.simplesu.simplemodel.arch.calculateAd
@@ -12,6 +13,8 @@ import com.simplesu.simplemodel.arch.calculateEmi
 import com.simplesu.simplemodel.arch.calculateEmiMonth
 import com.simplesu.simplemodel.arch.calculateEmiRate
 import com.simplesu.simplemodel.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 class MainActivity : ArchActivity<ActivityMainBinding>() {
@@ -43,7 +46,7 @@ class MainActivity : ArchActivity<ActivityMainBinding>() {
 //        //计算表格数据
 //        LogUtils.e("yqw=====>", calculateEMIRepaymentSchedule(10000.0,0.01,36,0))
 
-        binding.demo.startDraw(700.0,200.0,100.0)
+        binding.demo.startDraw(700.1111,200.5555,99.3334)
     }
 
 }

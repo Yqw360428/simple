@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import com.blankj.utilcode.util.SizeUtils
+import java.util.Locale
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -17,7 +17,9 @@ class ChartView @JvmOverloads constructor(
     private val paint2 = Paint()
     private val paint3 = Paint()
     private val paintText = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val gap = SizeUtils.dp2px(20f)
+    private var gap = 0f
+    private var mWidth = 0
+    private var mHeight = 0
 
     private var principalPercent = 0f
     private var interestPercent = 0f
@@ -31,28 +33,35 @@ class ChartView @JvmOverloads constructor(
         paintText.color = Color.BLACK
     }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        gap = width*0.09f
+        mWidth = minOf(width,height)
+        mHeight = minOf(width,height)
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (isDraw){
-            canvas.drawArc(0f+2*gap,0f+2*gap,width.toFloat()-gap,height.toFloat()-gap,-90f,principalPercent,true,paint1)
-            canvas.drawArc(0f+gap,0f+gap,width.toFloat()-gap,height.toFloat()-gap,-90f+principalPercent,interestPercent,true,paint2)
-            canvas.drawArc(0f+gap,0f+gap,width.toFloat()-gap,height.toFloat()-gap,-90+principalPercent+interestPercent,freePercent,true,paint3)
+            canvas.drawArc(3*gap/2,3*gap/2,mWidth.toFloat()-gap,mHeight.toFloat()-gap,-90f,principalPercent,true,paint1)
+            canvas.drawArc(gap,gap,mWidth.toFloat()-gap,mHeight.toFloat()-gap,-90f+principalPercent,interestPercent,true,paint2)
+            canvas.drawArc(gap,gap,mWidth.toFloat()-gap,mHeight.toFloat()-gap,-90+principalPercent+interestPercent,freePercent,true,paint3)
 
-            var cx = (width-gap)/2f+gap  // 圆心 x 坐标
-            var cy = (height-gap)/2f+gap  // 圆心 y 坐标
-            var radius = (width-3*gap)/2f // 扇形半径
+            var cx = (mWidth-gap/2)/2f+gap/2  // 圆心 x 坐标
+            var cy = (mHeight-gap/2)/2f+gap/2  // 圆心 y 坐标
+            var radius = (mWidth-5*gap/2)/2f // 扇形半径
 // 绘制每个扇形及其线条和文字
             val principalMiddleAngle = -90f + principalPercent / 2f
-            drawLabelLineAndText(canvas, cx, cy, radius, principalMiddleAngle, "${principalPercent/360}", paintText)
+            drawLabelLineAndText(canvas, cx, cy, radius, principalMiddleAngle, formatToPercentage(principalPercent/360), paintText)
 
-            cx = width / 2f
-            cy = height / 2f
-            radius = width / 2f-gap
+            cx = mWidth / 2f
+            cy = mHeight / 2f
+            radius = mWidth / 2f-gap
             val interestMiddleAngle = -90f + principalPercent + interestPercent / 2f
-            drawLabelLineAndText(canvas, cx, cy, radius, interestMiddleAngle, "Interest", paintText)
+            drawLabelLineAndText(canvas, cx, cy, radius, interestMiddleAngle, formatToPercentage(interestPercent/360), paintText)
 
             val freeMiddleAngle = -90f + principalPercent + interestPercent + freePercent / 2f
-            drawLabelLineAndText(canvas, cx, cy, radius, freeMiddleAngle, "Free", paintText)
+            drawLabelLineAndText(canvas, cx, cy, radius, freeMiddleAngle, formatToPercentage(freePercent/360), paintText)
         }
     }
 
@@ -75,7 +84,6 @@ class ChartView @JvmOverloads constructor(
         // 延长线终点坐标（根据需要延长线的长度调整 20f）
         val lineEndX = cx + (radius + 20f) * cos(radians).toFloat()
         val lineEndY = cy + (radius + 20f) * sin(radians).toFloat()
-
         // 绘制线条
         canvas.drawLine(xMiddle, yMiddle, lineEndX, lineEndY, textPaint)
         var offsetX = 0f
@@ -83,26 +91,26 @@ class ChartView @JvmOverloads constructor(
         when(getQuadrant(cx,cy,lineEndX,lineEndY)){
             1->{
                 //第一象限
-                offsetX = 10f
+                offsetX = 2f
             }
             2->{
                 //第二象限
-                offsetX = -10f
-                offsetY = -10f
+                offsetX = -textPaint.measureText(text)-2f
+                offsetY = -2f
             }
             3->{
                 //第三象限
-                offsetX = -10f
-                offsetY = 10f
+                offsetX = -textPaint.measureText(text)-2f
+                offsetY = 2f
             }
             4->{
                 //第四象限
-                offsetX = 10f
-                offsetY = 10f
+                offsetX = 2f
+                offsetY = 2f
             }
             0->{
                 //轴上
-                offsetX = 10f
+                offsetX = textPaint.measureText(text)+2f
             }
         }
         // 绘制文字（调整偏移量让文字更美观）
@@ -118,6 +126,8 @@ class ChartView @JvmOverloads constructor(
             else -> 0 // 圆心或轴上
         }
     }
+
+    private fun formatToPercentage(value: Float) = if (value == 0f) "0%" else String.format(Locale.getDefault(),"%.2f", value * 100).trimEnd('0').trimEnd('.') + "%"
 
 
     fun startDraw(principal : Double,interest : Double,free : Double){
