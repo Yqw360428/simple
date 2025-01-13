@@ -6,9 +6,10 @@ import com.adjust.sdk.AdjustConfig
 import com.adjust.sdk.LogLevel
 import kotlin.properties.Delegates
 
-class App : Application() {
+class BaseApp : Application() {
     companion object {
-        var instance by Delegates.notNull<App>()
+        var instance by Delegates.notNull<BaseApp>()
+        var url = ""
     }
 
     override fun onCreate() {

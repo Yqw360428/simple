@@ -1,52 +1,68 @@
 package com.simplesu.simplemodel.ac
 
-import androidx.lifecycle.lifecycleScope
-import com.blankj.utilcode.util.LogUtils
+import androidx.recyclerview.widget.GridLayoutManager
+import com.simplesu.simplemodel.R
+import com.simplesu.simplemodel.ac.ad.TabAdapter
 import com.simplesu.simplemodel.arch.ArchActivity
-import com.simplesu.simplemodel.arch.calculateAd
-import com.simplesu.simplemodel.arch.calculateAdAmount
-import com.simplesu.simplemodel.arch.calculateAdMonth
-import com.simplesu.simplemodel.arch.calculateAdRate
-import com.simplesu.simplemodel.arch.calculateEMIRepaymentSchedule
-import com.simplesu.simplemodel.arch.calculateEmiAmount
-import com.simplesu.simplemodel.arch.calculateEmi
-import com.simplesu.simplemodel.arch.calculateEmiMonth
-import com.simplesu.simplemodel.arch.calculateEmiRate
+import com.simplesu.simplemodel.arch.initPopup
+import com.simplesu.simplemodel.arch.singleClick
+import com.simplesu.simplemodel.be.TabBean
 import com.simplesu.simplemodel.databinding.ActivityMainBinding
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
 
 class MainActivity : ArchActivity<ActivityMainBinding>() {
+    private val tabList = mutableListOf<TabBean>()
+    private val tabAdapter by lazy {
+        TabAdapter(tabList).apply {
+            setHasStableIds(true)
+            setOnItemClickListener { _, _, position ->
+                calType = position
+                binding.type = calType
+                tabList.forEach { it.select = false }
+                tabList[position].select = true
+                setList(tabList)
+            }
+        }
+    }
+    private var calType = 0
+
+    private var amount = 0.0
+    private var emi = 0.0
+    private var rate = 0.0
+    private var tenure = 0
+    private var fee = 0.0
+    private var emiScheme = 0
+
     override fun initView() {
-        /**
-         * 本金 10000
-         * 月利率 1%
-         * 期数 36
-         */
+        tabList.apply {
+            add(TabBean(getString(R.string.emi),true))
+            add(TabBean(getString(R.string.amount),false))
+            add(TabBean(getString(R.string.tenure),false))
+            add(TabBean(getString(R.string.interest),false))
+        }
 
-//        val a = calculateEmi(10000.0,0.01,36)
-//        LogUtils.e("yqw=====>", a)//emi 332.14309812851167  四舍五入后为332
-//        val b = calculateEmiAmount(332.0,0.01,36)
-//        LogUtils.e("yqw=====>",b)//得到本金 9995.691672375011
-//        val c = calculateEmiMonth(10000.0,332.0,0.01)
-//        LogUtils.e("yqw=====>",c)//期数是36
-//        val d = calculateEmiRate(332.0,10000.0,36)
-//        LogUtils.e("yqw=====>",(d*100).roundToInt())//利率0.009975030086934566
-//
-//        val a1 = calculateAd(10000.0,0.01,36)
-//        LogUtils.e("yqw=====>", a1)//ad 328.85455260248676  四舍五入后为329
-//        val b1 = calculateAdAmount(329.0,0.01,36)
-//        LogUtils.e("yqw=====>",b1)//得到本金 10004.42284883582
-//        val c1 = calculateAdMonth(10000.0,329.0,0.01)
-//        LogUtils.e("yqw=====>",c1)//期数是36
-//        val d1 = calculateAdRate(329.0,10000.0,36)
-//        LogUtils.e("yqw=====>",d1)//利率0.010027187876403332
-//
-//        //计算表格数据
-//        LogUtils.e("yqw=====>", calculateEMIRepaymentSchedule(10000.0,0.01,36,0))
+        binding.run {
+            recyclerViewTab.layoutManager = GridLayoutManager(this@MainActivity,4)
+            recyclerViewTab.adapter = tabAdapter
+            type = calType
 
-        binding.demo.startDraw(700.1111,200.5555,99.3334)
+            mainUp.singleClick {
+                launch(ResultActivity::class.java)
+            }
+        }
+
+
+        binding.mainSelectTenure.singleClick {
+            it.initPopup(arrayOf(getString(R.string.yr), getString(R.string.mo))){index,str->
+                binding.mainSelectTenure.text = str
+            }
+        }
+
+        binding.mainSelectScheme.singleClick {
+            it.initPopup(arrayOf(getString(R.string.emi_in_arrears),getString(R.string.emi_advance))){index,str->
+                emiScheme = index
+                binding.mainScheme.text = str
+            }
+        }
     }
 
 }

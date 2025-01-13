@@ -1,17 +1,443 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black"
-    tools:context=".ac.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.simplesu.simplemodel.arch.ChartView
-        android:id="@+id/demo"
-        android:background="@color/white"
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="type"
+            type="Integer" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:background="@drawable/main_bg"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"/>
+        tools:context=".ac.MainActivity">
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/ff373b5e"
+                android:textSize="17sp"
+                android:text="@string/app_name"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                tools:ignore="RelativeOverlap" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/main_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:padding="16dp"
+                android:src="@mipmap/shengji" />
+
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            android:overScrollMode="never">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginEnd="27dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
+                            android:textSize="21sp"
+                            android:textColor="@color/ff373b5e"
+                            android:text="@string/app_name" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/ff373b5e"
+                            android:textSize="12sp"
+                            android:text="@string/professional_calcula" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/pic1" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="1dp"
+                    radius="@{12}"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView_tab"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"/>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:visibility="@{type == 1 ? View.GONE : View.VISIBLE}"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/ff373b5e"
+                            android:textSize="14sp"
+                            android:text="@string/loan_amount"/>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:visibility="@{type == 1 ? View.GONE : View.VISIBLE}"
+                            android:layout_height="42dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/shape_edit"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/main_amount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingStart="16dp"
+                                android:paddingEnd="16dp"
+                                android:singleLine="true"
+                                android:inputType="numberDecimal"
+                                android:digits="0123456789."
+                                android:textColor="@color/ff373b5e"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/poppins_bold"
+                                android:hint="@string/please_input"
+                                android:textColorHint="@color/ffcdcdcd"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/ff717485"
+                                android:gravity="center"
+                                android:text="@string/fuhao"
+                                android:layout_marginEnd="16dp"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:visibility="@{type == 0 ? View.GONE : View.VISIBLE}"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/ff373b5e"
+                            android:textSize="14sp"
+                            android:text="@string/emi"/>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:visibility="@{type == 0 ? View.GONE : View.VISIBLE}"
+                            android:layout_height="42dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/shape_edit"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/main_emi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingStart="16dp"
+                                android:paddingEnd="16dp"
+                                android:singleLine="true"
+                                android:inputType="numberDecimal"
+                                android:digits="0123456789."
+                                android:textColor="@color/ff373b5e"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/poppins_bold"
+                                android:hint="@string/please_input"
+                                android:textColorHint="@color/ffcdcdcd"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/ff717485"
+                                android:gravity="center"
+                                android:text="@string/fuhao"
+                                android:layout_marginEnd="16dp"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:visibility="@{type == 3 ? View.GONE : View.VISIBLE}"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/ff373b5e"
+                            android:textSize="14sp"
+                            android:text="@string/interest_rate"/>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:visibility="@{type == 3 ? View.GONE : View.VISIBLE}"
+                            android:layout_height="42dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/shape_edit"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/main_rate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingStart="16dp"
+                                android:paddingEnd="16dp"
+                                android:singleLine="true"
+                                android:inputType="numberDecimal"
+                                android:digits="0123456789."
+                                android:textColor="@color/ff373b5e"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/poppins_bold"
+                                android:hint="@string/please_input"
+                                android:textColorHint="@color/ffcdcdcd"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/ff717485"
+                                android:gravity="center"
+                                android:text="@string/fuhao1"
+                                android:layout_marginEnd="16dp"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:visibility="@{type == 2 ? View.GONE : View.VISIBLE}"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/ff373b5e"
+                            android:textSize="14sp"
+                            android:text="@string/loan_tenure"/>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:visibility="@{type == 2 ? View.GONE : View.VISIBLE}"
+                            android:layout_height="42dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/main_tenure"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/shape_edit"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="14dp"
+                                android:gravity="center_vertical"
+                                android:paddingStart="16dp"
+                                android:paddingEnd="16dp"
+                                android:singleLine="true"
+                                android:inputType="number"
+                                android:digits="0123456789"
+                                android:textColor="@color/ff373b5e"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/poppins_bold"
+                                android:hint="@string/please_input"
+                                android:textColorHint="@color/ffcdcdcd"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/main_select_tenure"
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/poppins_bold"
+                                android:drawableEnd="@mipmap/arrow"
+                                android:paddingEnd="16dp"
+                                android:paddingStart="0dp"
+                                android:background="@drawable/shape_edit"
+                                android:textSize="14sp"
+                                android:textColor="@color/ff373b5e"
+                                android:gravity="end|center_vertical"
+                                android:text="@string/yr"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/ff373b5e"
+                            android:textSize="14sp"
+                            android:text="@string/fees_charge"/>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/shape_edit"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/main_free"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingStart="16dp"
+                                android:paddingEnd="16dp"
+                                android:singleLine="true"
+                                android:inputType="numberDecimal"
+                                android:digits="0123456789."
+                                android:textColor="@color/ff373b5e"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/poppins_bold"
+                                android:hint="@string/please_input"
+                                android:textColorHint="@color/ffcdcdcd"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textSize="14sp"
+                                android:textColor="@color/ff717485"
+                                android:gravity="center"
+                                android:text="@string/fuhao1"
+                                android:layout_marginEnd="16dp"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/ff373b5e"
+                            android:textSize="14sp"
+                            android:text="@string/emi_scheme"/>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/shape_edit"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/main_scheme"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingStart="16dp"
+                                android:paddingEnd="16dp"
+                                android:textColor="@color/ff373b5e"
+                                android:textSize="14sp"
+                                android:text="@string/emi_in_arrears"
+                                android:fontFamily="@font/poppins_bold"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/main_select_scheme"
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerInside"
+                                android:src="@mipmap/arrow" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/main_clear"
+                                android:layout_width="120dp"
+                                android:layout_height="44dp"
+                                android:background="@drawable/shape_clear"
+                                android:gravity="center"
+                                android:textColor="@color/ff4b71ed"
+                                android:fontFamily="@font/poppins_bold"
+                                android:textSize="14sp"
+                                android:text="@string/clear"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/main_calculate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="44dp"
+                                android:layout_weight="1"
+                                android:layout_marginStart="18dp"
+                                android:background="@drawable/shape_cal"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:fontFamily="@font/poppins_bold"
+                                android:textSize="14sp"
+                                android:text="@string/calculate"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

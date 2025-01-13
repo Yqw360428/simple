@@ -3,5 +3,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
-    <color name="ff2f8bff">#FF2F8BFF</color>
+    <color name="ffe4eaff">#FFE4EAFF</color>
+    <color name="fff5f6fa">#FFF5F6FA</color>
+    <color name="ff373b5e">#FF373B5E</color>
+    <color name="fff9faff">#FFF9FAFF</color>
+    <color name="ffedf0f9">#FFEDF0F9</color>
+    <color name="ff717485">#FF717485</color>
+    <color name="ffffba4f">#FFFFBA4F</color>
+    <color name="ffcdcdcd">#FFCDCDCD</color>
+    <color name="ff4b71ed">#FF4B71ED</color>
+    <color name="ff9aa6cb">#FF9AA6CB</color>
+    <color name="ffff7946">#FFFF7946</color>
 </resources>

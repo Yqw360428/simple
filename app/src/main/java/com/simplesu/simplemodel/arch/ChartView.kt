@@ -2,10 +2,12 @@ package com.simplesu.simplemodel.arch
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.simplesu.simplemodel.R
 import java.util.Locale
 import kotlin.math.cos
 import kotlin.math.sin
@@ -13,10 +15,11 @@ import kotlin.math.sin
 class ChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-    private val paint1 = Paint()
-    private val paint2 = Paint()
-    private val paint3 = Paint()
-    private val paintText = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val paint1 = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val paint2 = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val paint3 = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+
     private var gap = 0f
     private var mWidth = 0
     private var mHeight = 0
@@ -27,10 +30,14 @@ class ChartView @JvmOverloads constructor(
     private var isDraw = false
 
     init {
-        paint1.color = Color.GREEN
-        paint2.color = Color.YELLOW
-        paint3.color = Color.RED
-        paintText.color = Color.BLACK
+        paint1.color = ContextCompat.getColor(context, R.color.ff4b71ed)
+        paint1.style = Paint.Style.FILL
+        paint2.color = ContextCompat.getColor(context, R.color.ffffba4f)
+        paint2.style = Paint.Style.FILL
+        paint3.color = ContextCompat.getColor(context, R.color.ffff7946)
+        paint3.style = Paint.Style.FILL
+        textPaint.color = ContextCompat.getColor(context, R.color.ff373b5e)
+        textPaint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,14f,resources.displayMetrics)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -52,16 +59,19 @@ class ChartView @JvmOverloads constructor(
             var radius = (mWidth-5*gap/2)/2f // 扇形半径
 // 绘制每个扇形及其线条和文字
             val principalMiddleAngle = -90f + principalPercent / 2f
-            drawLabelLineAndText(canvas, cx, cy, radius, principalMiddleAngle, formatToPercentage(principalPercent/360), paintText)
+            textPaint.color = ContextCompat.getColor(context, R.color.ff4b71ed)
+            drawLabelLineAndText(canvas, cx, cy, radius, principalMiddleAngle, formatToPercentage(principalPercent/360))
 
             cx = mWidth / 2f
             cy = mHeight / 2f
             radius = mWidth / 2f-gap
             val interestMiddleAngle = -90f + principalPercent + interestPercent / 2f
-            drawLabelLineAndText(canvas, cx, cy, radius, interestMiddleAngle, formatToPercentage(interestPercent/360), paintText)
+            textPaint.color = ContextCompat.getColor(context, R.color.ffffba4f)
+            drawLabelLineAndText(canvas, cx, cy, radius, interestMiddleAngle, formatToPercentage(interestPercent/360))
 
             val freeMiddleAngle = -90f + principalPercent + interestPercent + freePercent / 2f
-            drawLabelLineAndText(canvas, cx, cy, radius, freeMiddleAngle, formatToPercentage(freePercent/360), paintText)
+            textPaint.color = ContextCompat.getColor(context, R.color.ffff7946)
+            drawLabelLineAndText(canvas, cx, cy, radius, freeMiddleAngle, formatToPercentage(freePercent/360))
         }
     }
 
@@ -72,8 +82,7 @@ class ChartView @JvmOverloads constructor(
         cy: Float,
         radius: Float,
         angle: Float,
-        text: String,
-        textPaint: Paint
+        text: String
     ) {
         // 转换角度为弧度
         val radians = Math.toRadians(angle.toDouble())
@@ -114,6 +123,7 @@ class ChartView @JvmOverloads constructor(
             }
         }
         // 绘制文字（调整偏移量让文字更美观）
+        textPaint.color = ContextCompat.getColor(context, R.color.ff373b5e)
         canvas.drawText(text, lineEndX+offsetX, lineEndY+offsetY, textPaint)
     }
 

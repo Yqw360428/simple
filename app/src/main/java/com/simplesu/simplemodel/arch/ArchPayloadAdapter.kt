@@ -29,7 +29,7 @@ abstract class ArchPayloadAdapter<B : ViewBinding,T>(data : MutableList<T>) : Ba
         convert(holder.binding,item)
     }
 
-    abstract fun convertPayloads(binding : B,item : T,payloads : List<Any>)
+    open fun convertPayloads(binding : B,item : T,payloads : List<Any>){}
     abstract fun convert(binding : B,item : T)
 
 }

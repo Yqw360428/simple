@@ -1,3 +1,30 @@
 <resources>
-    <string name="app_name">SimpleModel</string>
+    <string name="app_name">Smart Loan Calc</string>
+    <string name="professional_calcula">Professional calculator</string>
+    <string name="emi">EMI</string>
+    <string name="amount">Amount</string>
+    <string name="tenure">Tenure</string>
+    <string name="interest">Interest</string>
+    <string name="loan_amount">Loan Amount</string>
+    <string name="please_input">Please input</string>
+    <string name="fuhao">₹</string>
+    <string name="interest_rate">Interest Rate</string>
+    <string name="fuhao1">%</string>
+    <string name="loan_tenure">Loan Tenure</string>
+    <string name="yr">Yr</string>
+    <string name="mo">Mo</string>
+    <string name="fees_charge"><![CDATA[Fees & Charge]]></string>
+    <string name="emi_scheme">EMI Scheme</string>
+    <string name="emi_in_arrears">EMI in Arrears</string>
+    <string name="emi_advance">EMI Advance</string>
+    <string name="clear">Clear</string>
+    <string name="calculate">Calculate</string>
+    <string name="result">Result</string>
+    <string name="schedule">Schedule</string>
+    <string name="loan_emi">Loan EMI</string>
+    <string name="total_interest_payab">Total Interest Payable</string>
+    <string name="total_payment">Total Payment</string>
+    <string name="principal_interest_fees_charges"><![CDATA[Principal + Interest + Fees & Charges]]></string>
+    <string name="break_up_of_total_payment">Break-up of Total Payment</string>
+    <string name="principal">Principal</string>
 </resources>

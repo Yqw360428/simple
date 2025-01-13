@@ -96,13 +96,13 @@ abstract class ArchActivity<B : ViewBinding> : AppCompatActivity() {
         permissionResult.launch(permissions)
     }
 
-    protected fun immersion(fullScreen : Boolean = true,statusBarLight : Boolean = false){
+    protected fun immersion(fullScreen : Boolean = true,statusBarLight : Boolean = true){
         WindowCompat.setDecorFitsSystemWindows(window,!fullScreen)
         val controller = WindowCompat.getInsetsController(window,binding.root)
         controller.isAppearanceLightStatusBars = statusBarLight
         controller.isAppearanceLightNavigationBars = statusBarLight
         if (fullScreen){
-            window.statusBarColor = ContextCompat.getColor(this, R.color.ff2f8bff)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.ffe4eaff)
             window.navigationBarColor = ContextCompat.getColor(this, R.color.white)
             if (VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 window.isNavigationBarContrastEnforced = false

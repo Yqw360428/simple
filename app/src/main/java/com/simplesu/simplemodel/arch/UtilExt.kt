@@ -1,15 +1,23 @@
 package com.simplesu.simplemodel.arch
 
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
+import android.graphics.Outline
+import android.util.TypedValue
 import android.view.View
+import android.view.ViewOutlineProvider
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.databinding.BindingAdapter
 import com.lxj.xpopup.XPopup
-import com.simplesu.simplemodel.App
+import com.simplesu.simplemodel.BaseApp
+import com.simplesu.simplemodel.R
 import com.simplesu.simplemodel.be.ScheduleBean
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -21,7 +29,7 @@ import kotlin.math.round
 var lastClickTime = 0L
 const val internalTime = 500L
 
-fun View.setOnSingleClick(onClick: (View) -> Unit) {
+fun View.singleClick(onClick: (View) -> Unit) {
     this.setOnClickListener {
         if (lastClickTime == 0L || (System.currentTimeMillis() - lastClickTime) >= internalTime) {
             onClick.invoke(it)
@@ -30,7 +38,7 @@ fun View.setOnSingleClick(onClick: (View) -> Unit) {
     }
 }
 
-fun setOnSingleClick(vararg views: View, onClick: (View) -> Unit) {
+fun singleClick(vararg views: View, onClick: (View) -> Unit) {
     views.forEach {
         it.setOnClickListener { _ ->
             if (lastClickTime == 0L || (System.currentTimeMillis() - lastClickTime) >= internalTime) {
@@ -41,8 +49,32 @@ fun setOnSingleClick(vararg views: View, onClick: (View) -> Unit) {
     }
 }
 
+@BindingAdapter(value = ["radius"])
+fun View.setRadius(radius : Int){
+    setOutline(this,radius.toFloat())
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter(value = ["coin"])
+fun TextView.setCoin(coin : Int){
+    text = "${context.getString(R.string.fuhao)} ${NumberFormat.getInstance(Locale.US).format(coin)}"
+}
+
+fun setOutline(view: View, radius: Float) {
+    view.outlineProvider = object : ViewOutlineProvider() {
+        override fun getOutline(view: View, outline: Outline) {
+            outline.setRoundRect(0, 0, view.width, view.height, TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                radius,
+                view.resources.displayMetrics
+            ))
+        }
+    }
+    view.clipToOutline = true
+}
+
 val String.toastShort
-    get() = Toast.makeText(App.instance, this, Toast.LENGTH_SHORT).show()
+    get() = Toast.makeText(BaseApp.instance, this, Toast.LENGTH_SHORT).show()
 
 fun AppCompatTextView.copyTextToClipboard() {
     val clipDescription = ClipDescription("text", arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN))
@@ -55,10 +87,18 @@ fun View.initPopup(data: Array<String>, onSelectListener: (Int, String) -> Unit)
     XPopup.Builder(context)
         .atView(this)
         .hasShadowBg(false)
+        .isLightStatusBar(true)
         .asAttachList(data, null) { index, str ->
             onSelectListener.invoke(index, str)
         }
         .show()
+}
+
+fun calculateTotalInterest(principal: Double, annualRate: Double, months : Int): Double {
+    val monthlyPayment = principal * annualRate * (1 + annualRate).pow(months.toDouble()) /
+            ((1 + annualRate).pow(months.toDouble()) - 1)
+    val totalRepayment = monthlyPayment * months
+    return totalRepayment - principal
 }
 
 //计算emi
