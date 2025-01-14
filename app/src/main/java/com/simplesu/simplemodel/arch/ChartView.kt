@@ -37,14 +37,14 @@ class ChartView @JvmOverloads constructor(
         paint3.color = ContextCompat.getColor(context, R.color.ffff7946)
         paint3.style = Paint.Style.FILL
         textPaint.color = ContextCompat.getColor(context, R.color.ff373b5e)
-        textPaint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,14f,resources.displayMetrics)
+        textPaint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,12f,resources.displayMetrics)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        gap = width*0.09f
         mWidth = minOf(width,height)
         mHeight = minOf(width,height)
+        gap = mWidth*0.12f
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -54,10 +54,9 @@ class ChartView @JvmOverloads constructor(
             canvas.drawArc(gap,gap,mWidth.toFloat()-gap,mHeight.toFloat()-gap,-90f+principalPercent,interestPercent,true,paint2)
             canvas.drawArc(gap,gap,mWidth.toFloat()-gap,mHeight.toFloat()-gap,-90+principalPercent+interestPercent,freePercent,true,paint3)
 
-            var cx = (mWidth-gap/2)/2f+gap/2  // 圆心 x 坐标
-            var cy = (mHeight-gap/2)/2f+gap/2  // 圆心 y 坐标
-            var radius = (mWidth-5*gap/2)/2f // 扇形半径
-// 绘制每个扇形及其线条和文字
+            var cx = (mWidth-gap/2)/2f+gap/2
+            var cy = (mHeight-gap/2)/2f+gap/2
+            var radius = (mWidth-5*gap/2)/2f
             val principalMiddleAngle = -90f + principalPercent / 2f
             textPaint.color = ContextCompat.getColor(context, R.color.ff4b71ed)
             drawLabelLineAndText(canvas, cx, cy, radius, principalMiddleAngle, formatToPercentage(principalPercent/360))
@@ -75,7 +74,6 @@ class ChartView @JvmOverloads constructor(
         }
     }
 
-    // 方法定义
     private fun drawLabelLineAndText(
         canvas: Canvas,
         cx: Float,
@@ -84,56 +82,46 @@ class ChartView @JvmOverloads constructor(
         angle: Float,
         text: String
     ) {
-        // 转换角度为弧度
         val radians = Math.toRadians(angle.toDouble())
-        // 弧线中点坐标
         val xMiddle = cx + radius * cos(radians).toFloat()
         val yMiddle = cy + radius * sin(radians).toFloat()
 
-        // 延长线终点坐标（根据需要延长线的长度调整 20f）
-        val lineEndX = cx + (radius + 20f) * cos(radians).toFloat()
-        val lineEndY = cy + (radius + 20f) * sin(radians).toFloat()
-        // 绘制线条
+        val lineEndX = cx + (radius + 15f) * cos(radians).toFloat()
+        val lineEndY = cy + (radius + 15f) * sin(radians).toFloat()
         canvas.drawLine(xMiddle, yMiddle, lineEndX, lineEndY, textPaint)
         var offsetX = 0f
         var offsetY = 0f
         when(getQuadrant(cx,cy,lineEndX,lineEndY)){
             1->{
-                //第一象限
                 offsetX = 2f
             }
             2->{
-                //第二象限
                 offsetX = -textPaint.measureText(text)-2f
                 offsetY = -2f
             }
             3->{
-                //第三象限
                 offsetX = -textPaint.measureText(text)-2f
                 offsetY = 2f
             }
             4->{
-                //第四象限
                 offsetX = 2f
                 offsetY = 2f
             }
             0->{
-                //轴上
                 offsetX = textPaint.measureText(text)+2f
             }
         }
-        // 绘制文字（调整偏移量让文字更美观）
         textPaint.color = ContextCompat.getColor(context, R.color.ff373b5e)
         canvas.drawText(text, lineEndX+offsetX, lineEndY+offsetY, textPaint)
     }
 
     private fun getQuadrant(cx: Float, cy: Float, x: Float, y: Float): Int {
         return when {
-            x > cx && y < cy -> 1 // 第一象限
-            x < cx && y < cy -> 2 // 第二象限
-            x < cx && y > cy -> 3 // 第三象限
-            x > cx && y > cy -> 4 // 第四象限
-            else -> 0 // 圆心或轴上
+            x > cx && y < cy -> 1
+            x < cx && y < cy -> 2
+            x < cx && y > cy -> 3
+            x > cx && y > cy -> 4
+            else -> 0
         }
     }
 

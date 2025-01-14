@@ -1,6 +1,6 @@
 package com.simplesu.simplemodel.be
 
-data class ScheduleBean(
+data class TotalBean(
     val time : String,
     val principal : Int,
     val interest : Int,

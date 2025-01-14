@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="total"
+            type="com.simplesu.simplemodel.be.TotalBean" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/total_view"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="42dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/ff717485"
+            android:textSize="12sp"
+            android:text="@{total.time}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/ff373b5e"
+            android:textSize="12sp"
+            android:text="@{String.valueOf(total.principal)}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/ff373b5e"
+            android:textSize="12sp"
+            android:text="@{String.valueOf(total.interest)}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/ff373b5e"
+            android:textSize="12sp"
+            android:text="@{String.valueOf(total.total)}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/ff373b5e"
+            android:textSize="12sp"
+            android:text="@{String.valueOf(total.remain)}" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

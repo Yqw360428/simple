@@ -16,7 +16,7 @@ import androidx.databinding.BindingAdapter
 import com.lxj.xpopup.XPopup
 import com.simplesu.simplemodel.BaseApp
 import com.simplesu.simplemodel.R
-import com.simplesu.simplemodel.be.ScheduleBean
+import com.simplesu.simplemodel.be.TotalBean
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -204,8 +204,8 @@ fun calculateEMIRepaymentSchedule(
     rate: Double,
     months: Int,
     emiType: Int
-): MutableList<ScheduleBean> {
-    val repaymentSchedule = mutableListOf<ScheduleBean>()
+): MutableList<TotalBean> {
+    val repaymentSchedule = mutableListOf<TotalBean>()
 
     val emi: Double = if (emiType == 0) {
         (loanAmount * rate * (1 + rate).pow(months.toDouble())) /
@@ -216,7 +216,7 @@ fun calculateEMIRepaymentSchedule(
     }
 
     val calendar = Calendar.getInstance()
-    val formatter = SimpleDateFormat("yyyy-MM", Locale.getDefault())
+    val formatter = SimpleDateFormat("MM/yyyy", Locale.getDefault())
     var remainingLoan = loanAmount
     var remain = 0.0
 
@@ -235,7 +235,7 @@ fun calculateEMIRepaymentSchedule(
             maxOf(0.0, remain - principal)
         }
         repaymentSchedule.add(
-            ScheduleBean(
+            TotalBean(
                 formatter.format(calendar.time),
                 round(principal).toInt(),
                 round(interest).toInt(),
