@@ -5,6 +5,7 @@ import android.content.Intent
 import com.simplesu.simplemodel.BuildConfig
 import com.simplesu.simplemodel.arch.ArchActivity
 import com.simplesu.simplemodel.arch.singleClick
+import com.simplesu.simplemodel.arch.toastShort
 import com.simplesu.simplemodel.databinding.ActivitySettingBinding
 
 class SettingActivity : ArchActivity<ActivitySettingBinding>() {
@@ -30,7 +31,10 @@ class SettingActivity : ArchActivity<ActivitySettingBinding>() {
             }
 
             setData.singleClick {
-
+                cacheDir.listFiles()?.forEach {
+                    it.delete()
+                }
+                "Clear cache successfully!".toastShort
             }
         }
     }
