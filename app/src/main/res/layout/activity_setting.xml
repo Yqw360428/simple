@@ -106,7 +106,7 @@
                             android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/ff4b71ed"
                             android:textSize="14sp"
-                            android:text="123456789@gmail.com"/>
+                            android:text="attaur0521@gmail.com"/>
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 

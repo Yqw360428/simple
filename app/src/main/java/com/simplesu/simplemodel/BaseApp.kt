@@ -9,7 +9,9 @@ import kotlin.properties.Delegates
 class BaseApp : Application() {
     companion object {
         var instance by Delegates.notNull<BaseApp>()
+        var upUrl = ""
         var url = ""
+        var isMainLaunch = false
     }
 
     override fun onCreate() {
@@ -19,7 +21,7 @@ class BaseApp : Application() {
         Adjust.initSdk(
             AdjustConfig(
                 this,
-                "",
+                "h1ythfa1hn28",
                 AdjustConfig.ENVIRONMENT_SANDBOX
             ).apply {
                 setLogLevel(LogLevel.WARN)

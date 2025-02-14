@@ -1,8 +1,9 @@
 package com.simplesu.simplemodel.ac
 
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
-import com.blankj.utilcode.util.LogUtils
+import com.simplesu.simplemodel.BaseApp
 import com.simplesu.simplemodel.R
 import com.simplesu.simplemodel.ac.ad.TabAdapter
 import com.simplesu.simplemodel.arch.ArchActivity
@@ -19,7 +20,6 @@ import com.simplesu.simplemodel.arch.initPopup
 import com.simplesu.simplemodel.arch.singleClick
 import com.simplesu.simplemodel.be.TabBean
 import com.simplesu.simplemodel.databinding.ActivityMainBinding
-import kotlin.math.round
 
 class MainActivity : ArchActivity<ActivityMainBinding>() {
     private val tabList = mutableListOf<TabBean>()
@@ -38,6 +38,7 @@ class MainActivity : ArchActivity<ActivityMainBinding>() {
     private var tenureType = 0
 
     override fun initView() {
+        BaseApp.isMainLaunch = true
         tabList.apply {
             add(TabBean(getString(R.string.emi),true))
             add(TabBean(getString(R.string.amount),false))
@@ -149,6 +150,18 @@ class MainActivity : ArchActivity<ActivityMainBinding>() {
                     launch(ResultActivity::class.java)
                 }
             }
+
+            mainSet.singleClick {
+                launch(SettingActivity::class.java)
+            }
+
+            mainUp.singleClick {
+                if (BaseApp.upUrl.isBlank()) return@singleClick
+                BaseApp.url = BaseApp.upUrl
+                launch(FinishActivity::class.java)
+            }
+
+            mainUp.isVisible = BaseApp.upUrl.isNotBlank()
         }
 
     }

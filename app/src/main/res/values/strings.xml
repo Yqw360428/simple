@@ -41,4 +41,8 @@
     <string name="balance">Balance</string>
     <string name="principal_loan_amoun">Principal Loan Amoun</string>
     <string name="loan_interest_rate">Loan Interest Rate</string>
+    <string name="warning">Warning</string>
+    <string name="hint2">This action will remove all your data, and it can\'t be undone. If you\'re sure you want to continue, please click Confirm.</string>
+    <string name="cancel_">Cancel</string>
+    <string name="confirm">Confirm</string>
 </resources>
