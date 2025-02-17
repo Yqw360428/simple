@@ -1,12 +1,10 @@
 package com.simplesu.simplemodel.ac
 
 import androidx.lifecycle.lifecycleScope
-import com.blankj.utilcode.util.LogUtils
 import com.simplesu.simplemodel.BaseApp
 import com.simplesu.simplemodel.arch.ArchActivity
 import com.simplesu.simplemodel.arch.netData
 import com.simplesu.simplemodel.databinding.ActivityInitBinding
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class InitActivity : ArchActivity<ActivityInitBinding>() {

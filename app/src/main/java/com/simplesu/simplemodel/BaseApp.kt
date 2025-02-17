@@ -22,7 +22,7 @@ class BaseApp : Application() {
             AdjustConfig(
                 this,
                 "h1ythfa1hn28",
-                AdjustConfig.ENVIRONMENT_SANDBOX
+                AdjustConfig.ENVIRONMENT_PRODUCTION
             ).apply {
                 setLogLevel(LogLevel.WARN)
             }

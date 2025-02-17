@@ -60,6 +60,4 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'com.github.lzyzsd:jsbridge:1.0.4'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
-    implementation 'com.blankj:utilcodex:1.31.0'
 }
